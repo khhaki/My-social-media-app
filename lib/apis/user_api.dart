@@ -1,9 +1,16 @@
+// ignore: depend_on_referenced_packages
 import 'package:appwrite/appwrite.dart';
 import 'package:clonetwit/constants/constants.dart';
+import 'package:clonetwit/core/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../core/core.dart';
 import '../models/user_model.dart';
+
+final userAPIProvider = Provider((ref) {
+  return ref.watch(appwriteDataBaseProvider);
+});
 
 abstract class IUserAPI {
   FutureEtheirVoid saveUserData(UserModel user);

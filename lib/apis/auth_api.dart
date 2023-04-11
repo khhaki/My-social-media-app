@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:appwrite/appwrite.dart';
-import 'package:appwrite/models.dart ' as model;
+import 'package:appwrite/models.dart' as model;
 import 'package:clonetwit/core/provider.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod/riverpod.dart';
@@ -26,7 +26,7 @@ abstract class IAuthAPI {
     required String password,
   });
 
-  Future currentUserAccount();
+  Future<model.Account?> currentUserAccount();
 }
 
 class AuthAPI implements IAuthAPI {
@@ -36,7 +36,7 @@ class AuthAPI implements IAuthAPI {
   }) : _account = account;
 
   @override
-  Future currentUserAccount() async {
+  Future<model.Account?> currentUserAccount() async {
     try {
       return _account.get();
     } on AppwriteException {
@@ -52,7 +52,7 @@ class AuthAPI implements IAuthAPI {
     try {
       final account = await _account.create(
           userId: ID.unique(), email: email, password: password);
-      return right(account as model.Account);
+      return right(account);
     } on AppwriteException catch (e, stackTrace) {
       return left(
           Failure(e.message ?? 'Some unexpected error occurred', stackTrace));
@@ -67,7 +67,7 @@ class AuthAPI implements IAuthAPI {
     try {
       final session =
           await _account.createEmailSession(email: email, password: password);
-      return right(session as model.Session);
+      return right(session);
     } on AppwriteException catch (e, stackTrace) {
       return left(
           Failure(e.message ?? 'Some unexpected error occurred', stackTrace));
