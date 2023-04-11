@@ -11,7 +11,7 @@ class UserModel {
   final String uid;
   final String bio;
   final bool isTwblue;
-  UserModel({
+  const UserModel({
     required this.email,
     required this.name,
     required this.followers,
