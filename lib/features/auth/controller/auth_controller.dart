@@ -13,9 +13,17 @@ import 'package:appwrite/models.dart' as model;
 final authControllerProvider =
     StateNotifierProvider<AuthController, bool>((ref) {
   return AuthController(
-      authAPI: ref.watch(authAPIProvider),
-      userAPI:
-          ref.watch(userAPIProvider as AlwaysAliveProviderListenable<UserAPI>));
+      authAPI: ref.watch(authAPIProvider), userAPI: ref.watch(userAPIProvider));
+});
+final userDetailsProvider = FutureProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData(uid);
+});
+
+final currentUserDetailsProvider = FutureProvider((ref) {
+  final currentUserUid = ref.watch(currentUserAccountProvider).value!.$id;
+  final userDetails = ref.watch(userDetailsProvider(currentUserUid));
+  return userDetails.value;
 });
 
 final currentUserAccountProvider = FutureProvider((ref) {
@@ -51,7 +59,7 @@ class AuthController extends StateNotifier<bool> {
           following: [],
           profilePic: '',
           bannerPic: '',
-          uid: '',
+          uid: r.$id,
           bio: '',
           isTwblue: false);
       final res2 = await _userAPI.saveUserData(userModel);
@@ -72,5 +80,11 @@ class AuthController extends StateNotifier<bool> {
     res.fold((l) => showSnakBar(context, l.message), (r) {
       Navigator.push(context, HomeView.route());
     });
+  }
+
+  Future<UserModel> getUserData(String uid) async {
+    final document = await _userAPI.getUserData(uid);
+    final upDatedUser = UserModel.fromMap(document.data);
+    return upDatedUser;
   }
 }

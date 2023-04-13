@@ -28,7 +28,9 @@ class MyApp extends ConsumerWidget {
             return const SignUpView();
           },
           error: (error, st) {
-            return ErrorPage(error: error.toString());
+            return null;
+
+            // return ErrorPage(error: error.toString());
           },
           loading: () => const LoadingPage()),
     );

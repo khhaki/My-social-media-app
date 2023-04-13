@@ -1,19 +1,22 @@
-// ignore: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
+
 import 'package:appwrite/appwrite.dart';
 import 'package:clonetwit/constants/constants.dart';
 import 'package:clonetwit/core/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:appwrite/models.dart' as model;
 
 import '../core/core.dart';
 import '../models/user_model.dart';
 
 final userAPIProvider = Provider((ref) {
-  return ref.watch(appwriteDataBaseProvider);
+  return UserAPI(db: ref.watch(appwriteDataBaseProvider));
 });
 
 abstract class IUserAPI {
   FutureEtheirVoid saveUserData(UserModel user);
+  Future<model.Document> getUserData(String uid);
 }
 
 class UserAPI implements IUserAPI {
@@ -25,7 +28,7 @@ class UserAPI implements IUserAPI {
       await _db.createDocument(
           databaseId: AppwriteConstants.databaseId,
           collectionId: AppwriteConstants.usercollection,
-          documentId: ID.unique(),
+          documentId: userModel.uid,
           data: userModel.toMap());
       return right(null);
     } on AppwriteException catch (e, st) {
@@ -37,5 +40,13 @@ class UserAPI implements IUserAPI {
         Failure(e.toString(), st),
       );
     }
+  }
+
+  @override
+  Future<model.Document> getUserData(String uid) {
+    return _db.getDocument(
+        databaseId: AppwriteConstants.databaseId,
+        collectionId: AppwriteConstants.usercollection,
+        documentId: uid);
   }
 }

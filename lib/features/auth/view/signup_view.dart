@@ -72,7 +72,7 @@ class _SignUpViewState extends ConsumerState<SignUpView> {
                           style: const TextStyle(fontSize: 16),
                           children: [
                             TextSpan(
-                                text: " Sign up",
+                                text: " Login",
                                 style:
                                     // ignore: prefer_const_constructors
                                     TextStyle(
