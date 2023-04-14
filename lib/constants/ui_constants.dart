@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, deprecated_member_use
 
 import 'package:clonetwit/constants/assets_constant.dart';
+import 'package:clonetwit/features/tweet/widgets/tweet_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,11 +17,8 @@ class UIConstants {
     );
   }
 
-  static List<Widget> bottomTabBarPages = [
-    Text(
-      'Feed screen',
-      style: TextStyle(color: Colors.white),
-    ),
+  static const List<Widget> bottomTabBarPages = [
+    TweetList(),
     Text('search screen', style: TextStyle(color: Colors.white)),
     Text('not screen', style: TextStyle(color: Colors.white)),
   ];
