@@ -20,6 +20,8 @@ abstract class ITweetAPI {
   FutureEtheir<Document> shareTweet(Tweet tweet);
   Future<List<Document>> getTweets();
   Stream<RealtimeMessage> getLatestTweet();
+  FutureEtheir<Document> likeTweet(Tweet tweet);
+  FutureEtheir<Document> updateReshareCount(Tweet tweet);
 }
 
 class TweetAPI implements ITweetAPI {
@@ -63,5 +65,45 @@ class TweetAPI implements ITweetAPI {
     return _realtime.subscribe([
       'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.tweetscollection}.documents'
     ]).stream;
+  }
+
+  @override
+  FutureEtheir<Document> likeTweet(Tweet tweet) async {
+    try {
+      final document = await _db.updateDocument(
+          databaseId: AppwriteConstants.databaseId,
+          collectionId: AppwriteConstants.tweetscollection,
+          documentId: tweet.id,
+          data: {'likes': tweet.likes});
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(e.message ?? 'some unexpected error occured', st),
+      );
+    } catch (e, st) {
+      return left(
+        Failure(e.toString(), st),
+      );
+    }
+  }
+
+  @override
+  FutureEtheir<Document> updateReshareCount(Tweet tweet) async {
+    try {
+      final document = await _db.updateDocument(
+          databaseId: AppwriteConstants.databaseId,
+          collectionId: AppwriteConstants.tweetscollection,
+          documentId: tweet.id,
+          data: {'reshareCount': tweet.reshareCount});
+      return right(document);
+    } on AppwriteException catch (e, st) {
+      return left(
+        Failure(e.message ?? 'some unexpected error occured', st),
+      );
+    } catch (e, st) {
+      return left(
+        Failure(e.toString(), st),
+      );
+    }
   }
 }

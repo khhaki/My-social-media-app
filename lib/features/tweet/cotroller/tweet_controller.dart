@@ -6,9 +6,11 @@ import 'package:clonetwit/core/enums/tweet_type_enum.dart';
 import 'package:clonetwit/core/utils.dart';
 import 'package:clonetwit/features/auth/controller/auth_controller.dart';
 import 'package:clonetwit/models/tweet_model.dart';
+import 'package:clonetwit/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:appwrite/appwrite.dart';
 
 final tweetControllerProvider =
     StateNotifierProvider<TweetController, bool>((ref) {
@@ -42,6 +44,36 @@ class TweetController extends StateNotifier<bool> {
   Future<List<Tweet>> getTweets() async {
     final tweetList = await _tweetAPI.getTweets();
     return tweetList.map((tweet) => Tweet.fromMap(tweet.data)).toList();
+  }
+
+  Future<void> likeTweet(Tweet tweet, UserModel user) async {
+    List<String> likes = tweet.likes;
+    if (likes.contains(user.uid)) {
+      likes.remove(user.uid);
+    } else {
+      likes.add(user.uid);
+    }
+    //update the field
+    tweet = tweet.copyWith(likes: likes);
+    final res = await _tweetAPI.likeTweet(tweet);
+    res.fold((l) => null, (r) => null);
+  }
+
+  Future<void> reschareTweet(
+      Tweet tweet, UserModel currentuser, BuildContext context) async {
+    tweet = tweet.copyWith(
+        retweetedBy: currentuser.name,
+        likes: [],
+        commentsIds: [],
+        reshareCount: tweet.reshareCount + 1);
+    final res = await _tweetAPI.updateReshareCount(tweet);
+
+    res.fold((l) => showSnakBar(context, l.message), (r) async {
+      tweet.copyWith(id: ID.unique(), reshareCount: 0);
+      final res2 = await _tweetAPI.shareTweet(tweet);
+      res2.fold((l) => showSnakBar(context, l.message),
+          (r) => showSnakBar(context, "Retweeted"));
+    });
   }
 
   void shareTweet(
@@ -79,7 +111,8 @@ class TweetController extends StateNotifier<bool> {
         likes: const [],
         commentsIds: const [],
         id: '',
-        reshareCount: 0);
+        reshareCount: 0,
+        retweetedBy: '');
     final res = await _tweetAPI.shareTweet(tweet);
     state = false;
     res.fold((l) => showSnakBar(context, l.message), (r) => null);
@@ -102,7 +135,8 @@ class TweetController extends StateNotifier<bool> {
         likes: const [],
         commentsIds: const [],
         id: '',
-        reshareCount: 0);
+        reshareCount: 0,
+        retweetedBy: '');
     final res = await _tweetAPI.shareTweet(tweet);
     state = false;
     res.fold((l) => showSnakBar(context, l.message), (r) => null);
