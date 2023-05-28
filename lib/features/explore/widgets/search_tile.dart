@@ -1,3 +1,4 @@
+import 'package:clonetwit/features/user_profile/views/userprofile_veiw.dart';
 import 'package:clonetwit/models/user_model.dart';
 import 'package:clonetwit/theme/pallete.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,9 @@ class SearchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        Navigator.push(context, UserProfileview.route(userModel));
+      },
       leading: CircleAvatar(
         backgroundImage: NetworkImage(userModel.profilePic),
         radius: 30,
