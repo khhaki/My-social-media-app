@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
+
 import 'package:clonetwit/common/common.dart';
 import 'package:clonetwit/constants/constants.dart';
 import 'package:clonetwit/features/auth/controller/auth_controller.dart';
@@ -20,7 +22,7 @@ class UserProfile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final currentUser = ref.watch(currentUserDetailsProvider).value;
     return currentUser == null
-        ? Loader()
+        ? const Loader()
         : NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
@@ -44,14 +46,15 @@ class UserProfile extends ConsumerWidget {
                     ),
                     Container(
                         alignment: Alignment.bottomRight,
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         child: OutlinedButton(
                             style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20)),
-                                side: BorderSide(
+                                side: const BorderSide(
                                     width: 1.5, color: Pallete.whiteColor),
-                                padding: EdgeInsets.symmetric(horizontal: 25)),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 25)),
                             onPressed: () {
                               if (currentUser.uid == user.uid) {
                                 Navigator.push(
@@ -67,40 +70,41 @@ class UserProfile extends ConsumerWidget {
                   ]),
                 ),
                 SliverPadding(
-                  padding: EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8),
                   sliver: SliverList(
                       delegate: SliverChildListDelegate([
                     Text(
                       user.name,
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 25, fontWeight: FontWeight.bold),
                     ),
                     Text(
                       '@${user.name}',
-                      style: TextStyle(fontSize: 17, color: Pallete.greyColor),
+                      style: const TextStyle(
+                          fontSize: 17, color: Pallete.greyColor),
                     ),
                     Text(
                       user.bio,
-                      style: TextStyle(fontSize: 17),
+                      style: const TextStyle(fontSize: 17),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: [
                         FollowCount(
                             count: user.following.length, text: 'Following'),
-                        SizedBox(
+                        const SizedBox(
                           width: 15,
                         ),
                         FollowCount(
                             count: user.followers.length, text: 'Followers')
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 2,
                     ),
-                    Divider(
+                    const Divider(
                       color: Pallete.whiteColor,
                     )
                   ])),
@@ -147,29 +151,25 @@ class UserProfile extends ConsumerWidget {
                           }
                         }
 
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount: tweets.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final tweet = tweets[index];
-                                return TweetCard(tweet: tweet);
-                              }),
-                        );
+                        return ListView.builder(
+                            itemCount: tweets.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final tweet = tweets[index];
+                              return TweetCard(tweet: tweet);
+                            });
                       },
                       error: (error, StackTrace) =>
                           ErrorText(error: error.toString()),
                       loading: () {
-                        return Expanded(
-                          child: ListView.builder(
-                              itemCount: tweets.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                final tweet = tweets[index];
-                                return TweetCard(tweet: tweet);
-                              }),
-                        );
+                        return ListView.builder(
+                            itemCount: tweets.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              final tweet = tweets[index];
+                              return TweetCard(tweet: tweet);
+                            });
                       });
                 },
                 error: (error, st) => ErrorText(error: error.toString()),
-                loading: () => Loader()));
+                loading: () => const Loader()));
   }
 }
