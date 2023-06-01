@@ -16,7 +16,7 @@ final authAPIProvider = Provider((ref) {
 // want to acces user related data-> model.Account
 abstract class IAuthAPI {
   //if succes return string, if failure return Account
-  FutureEtheir<model.Account> signUp({
+  FutureEtheir<model.User> signUp({
     required String email,
     required String password,
   });
@@ -26,7 +26,7 @@ abstract class IAuthAPI {
     required String password,
   });
 
-  Future<model.Account?> currentUserAccount();
+  Future<model.User?> currentUserAccount();
 }
 
 class AuthAPI implements IAuthAPI {
@@ -36,7 +36,7 @@ class AuthAPI implements IAuthAPI {
   }) : _account = account;
 
   @override
-  Future<model.Account?> currentUserAccount() async {
+  Future<model.User?> currentUserAccount() async {
     try {
       return await _account.get();
     } on AppwriteException {
@@ -47,7 +47,7 @@ class AuthAPI implements IAuthAPI {
   }
 
   @override
-  FutureEtheir<model.Account> signUp(
+  FutureEtheir<model.User> signUp(
       {required String email, required String password}) async {
     try {
       final account = await _account.create(

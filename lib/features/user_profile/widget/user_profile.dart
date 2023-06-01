@@ -137,7 +137,6 @@ class UserProfile extends ConsumerWidget {
                                 data.events[0].lastIndexOf('.update');
                             final tweetid = data.events[0]
                                 .substring(startingindex + 10, endpoint);
-                            print(tweetid);
                             var tweet = Tweet.fromMap(data.payload);
 
                             tweet = tweets

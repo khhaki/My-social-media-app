@@ -25,6 +25,12 @@ final getUserTweetsProvider = FutureProvider.family((ref, String uid) async {
   return userProfileController.getUserTweets(uid);
 });
 
+final getLatestUserProfileDataProvider =
+    StreamProvider.family.autoDispose((ref, String uid) {
+  final userAPI = ref.watch(userAPIProvider);
+  return userAPI.getLatestUserProfileData(uid);
+});
+
 class UserProfileController extends StateNotifier<bool> {
   final TweetAPI _tweetAPI;
   final StorageAPI _storageAPI;
@@ -59,7 +65,6 @@ class UserProfileController extends StateNotifier<bool> {
     }
     final res = await _userAPI.updateUserData(userModel);
     state = false;
-    res.fold(
-        (l) => showSnakBar(context, l.message), (r) => Navigator.pop(context));
+    res.fold((l) => showSnakBar(context, l.message), (r) => null);
   }
 }

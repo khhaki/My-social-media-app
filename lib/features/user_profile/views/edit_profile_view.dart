@@ -77,6 +77,7 @@ class _EditProfileVeiwState extends ConsumerState<EditProfileVeiw> {
                         context: context,
                         bannerFile: bannerFile,
                         profileFile: profileFile);
+                Navigator.pop(context);
               },
               child: const Text('Save'))
         ],

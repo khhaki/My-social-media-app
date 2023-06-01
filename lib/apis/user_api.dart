@@ -11,7 +11,9 @@ import '../core/core.dart';
 import '../models/user_model.dart';
 
 final userAPIProvider = Provider((ref) {
-  return UserAPI(db: ref.watch(appwriteDataBaseProvider));
+  return UserAPI(
+      db: ref.watch(appwriteDataBaseProvider),
+      realtimeu: ref.watch(appwriteRealtimeProvider));
 });
 
 abstract class IUserAPI {
@@ -19,11 +21,15 @@ abstract class IUserAPI {
   Future<model.Document> getUserData(String uid);
   Future<List<model.Document>> searchUserByName(String name);
   FutureEtheirVoid updateUserData(UserModel userModel);
+  Stream<RealtimeMessage> getLatestUserProfileData(String uid);
 }
 
 class UserAPI implements IUserAPI {
   final Databases _db;
-  UserAPI({required Databases db}) : _db = db;
+  final Realtime _realtimeu;
+  UserAPI({required Databases db, required Realtime realtimeu})
+      : _db = db,
+        _realtimeu = realtimeu;
   @override
   FutureEtheirVoid saveUserData(UserModel userModel) async {
     try {
@@ -80,5 +86,12 @@ class UserAPI implements IUserAPI {
         Failure(e.toString(), st),
       );
     }
+  }
+
+  @override
+  Stream<RealtimeMessage> getLatestUserProfileData(String uid) {
+    return _realtimeu.subscribe([
+      'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.usercollection}.documents.$uid'
+    ]).stream;
   }
 }

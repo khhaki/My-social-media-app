@@ -1,4 +1,4 @@
-import 'dart:convert';
+// ignore_for_file: depend_on_referenced_packages
 
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart';
@@ -65,9 +65,11 @@ class TweetAPI implements ITweetAPI {
 
   @override
   Stream<RealtimeMessage> getLatestTweet() {
-    return _realtime.subscribe([
-      'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.tweetscollection}.documents'
-    ]).stream;
+    return _realtime.subscribe(
+      [
+        'databases.${AppwriteConstants.databaseId}.collections.${AppwriteConstants.tweetscollection}.documents',
+      ],
+    ).stream;
   }
 
   @override

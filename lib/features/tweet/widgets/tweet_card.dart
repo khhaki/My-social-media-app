@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, deprecated_member_use, avoid_types_as_parameter_names, non_constant_identifier_names
+
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:clonetwit/common/common.dart';
 import 'package:clonetwit/constants/assets_constant.dart';
@@ -8,6 +10,7 @@ import 'package:clonetwit/features/tweet/views/tweeter_replying_screen.dart';
 import 'package:clonetwit/features/tweet/widgets/carousel_image.dart';
 import 'package:clonetwit/features/tweet/widgets/hashtag_text.dart';
 import 'package:clonetwit/features/tweet/widgets/tweet_icon_button.dart';
+import 'package:clonetwit/features/user_profile/views/userprofile_veiw.dart';
 import 'package:clonetwit/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,9 +44,15 @@ class TweetCard extends ConsumerWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.all(10),
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(user.profilePic),
-                            radius: 35,
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context, UserProfileview.route(user));
+                            },
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(user.profilePic),
+                              radius: 35,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -63,7 +72,7 @@ class TweetCard extends ConsumerWidget {
                                     ),
                                     Text(
                                       '${tweet.retweetedBy} retweeted',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Pallete.greyColor,
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500),
@@ -214,7 +223,7 @@ class TweetCard extends ConsumerWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 1,
                               )
                             ],
@@ -222,7 +231,7 @@ class TweetCard extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       color: Pallete.greyColor,
                     )
                   ],

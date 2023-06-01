@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_types_as_parameter_names
+
 import 'package:clonetwit/common/common.dart';
 import 'package:clonetwit/constants/constants.dart';
 import 'package:clonetwit/features/tweet/cotroller/tweet_controller.dart';
@@ -14,6 +16,7 @@ class TweeterReplyScreen extends ConsumerWidget {
           ));
   final Tweet tweet;
   const TweeterReplyScreen({
+    super.key,
     required this.tweet,
   });
 
@@ -21,7 +24,7 @@ class TweeterReplyScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('tweet'),
+        title: const Text('tweet'),
       ),
       body: Column(
         children: [
@@ -52,7 +55,7 @@ class TweeterReplyScreen extends ConsumerWidget {
                               data.events[0].lastIndexOf('.update');
                           final tweetid = data.events[0]
                               .substring(startingindex + 10, endpoint);
-                          print(tweetid);
+
                           var tweet = Tweet.fromMap(data.payload);
 
                           tweet = tweets
@@ -89,7 +92,7 @@ class TweeterReplyScreen extends ConsumerWidget {
                     });
               },
               error: (error, StackTrace) => ErrorText(error: error.toString()),
-              loading: () => Loader()),
+              loading: () => const Loader()),
         ],
       ),
       bottomNavigationBar: TextField(

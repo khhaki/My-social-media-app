@@ -1,5 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:clonetwit/common/common.dart';
-import 'package:clonetwit/common/loading_page.dart';
 import 'package:clonetwit/features/explore/controller/explore_controller.dart';
 import 'package:clonetwit/features/explore/widgets/search_tile.dart';
 import 'package:clonetwit/theme/pallete.dart';
@@ -65,7 +66,7 @@ class _ExplorViewState extends ConsumerState<ExplorView> {
                 );
               },
               loading: () => const Loader())
-          : SizedBox(),
+          : const SizedBox(),
     );
   }
 }

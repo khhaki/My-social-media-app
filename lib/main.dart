@@ -1,4 +1,3 @@
-import 'package:clonetwit/common/error_page.dart';
 import 'package:clonetwit/common/loading_page.dart';
 import 'package:clonetwit/features/auth/controller/auth_controller.dart';
 import 'package:clonetwit/features/auth/view/signup_view.dart';

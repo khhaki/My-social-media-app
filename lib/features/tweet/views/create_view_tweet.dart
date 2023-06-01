@@ -1,8 +1,9 @@
+// ignore_for_file: depend_on_referenced_packages
+
 import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:clonetwit/common/common.dart';
-import 'package:clonetwit/common/rounded_small_button.dart';
 import 'package:clonetwit/constants/assets_constant.dart';
 import 'package:clonetwit/core/utils.dart';
 import 'package:clonetwit/features/auth/controller/auth_controller.dart';
@@ -107,7 +108,8 @@ class _CreateTweetScreenState extends ConsumerState<CreateTweetScreen> {
                           (file) {
                             return Container(
                                 width: MediaQuery.of(context).size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 5),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5),
                                 child: Image.file(file));
                           },
                         ).toList(),

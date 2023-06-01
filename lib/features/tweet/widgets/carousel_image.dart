@@ -28,7 +28,7 @@ class _CarouselImageState extends State<CarouselImage> {
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25)),
                       width: MediaQuery.of(context).size.width,
-                      margin: EdgeInsets.all(10),
+                      margin: const EdgeInsets.all(10),
                       child: Image.network(
                         link,
                         fit: BoxFit.contain,
@@ -50,7 +50,7 @@ class _CarouselImageState extends State<CarouselImage> {
                 return Container(
                   width: 12,
                   height: 12,
-                  margin: EdgeInsets.symmetric(horizontal: 4),
+                  margin: const EdgeInsets.symmetric(horizontal: 4),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white

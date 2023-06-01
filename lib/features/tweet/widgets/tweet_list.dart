@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
+
 import 'package:clonetwit/common/common.dart';
 import 'package:clonetwit/constants/appwrite_constants.dart';
 import 'package:clonetwit/features/tweet/cotroller/tweet_controller.dart';
@@ -27,7 +29,6 @@ class TweetList extends ConsumerWidget {
                   final endpoint = data.events[0].lastIndexOf('.update');
                   final tweetid =
                       data.events[0].substring(startingindex + 10, endpoint);
-                  print(tweetid);
                   var tweet = Tweet.fromMap(data.payload);
 
                   tweet =
@@ -55,6 +56,6 @@ class TweetList extends ConsumerWidget {
               });
         },
         error: (error, StackTrace) => ErrorText(error: error.toString()),
-        loading: () => Loader());
+        loading: () => const Loader());
   }
 }

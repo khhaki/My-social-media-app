@@ -17,7 +17,7 @@ class FollowCount extends StatelessWidget {
               fontSize: 18,
               fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
           width: 3,
         ),
         Text(

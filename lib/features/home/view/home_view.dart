@@ -1,9 +1,10 @@
+// ignore_for_file: depend_on_referenced_packages, deprecated_member_use
+
 import 'package:clonetwit/constants/constants.dart';
 import 'package:clonetwit/features/tweet/views/create_view_tweet.dart';
 import 'package:clonetwit/theme/pallete.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeView extends StatefulWidget {

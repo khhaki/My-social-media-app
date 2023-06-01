@@ -15,21 +15,21 @@ class HashtagText extends StatelessWidget {
       if (element.startsWith('#')) {
         textspans.add(TextSpan(
             text: "$element ",
-            style: TextStyle(
+            style: const TextStyle(
                 color: Pallete.blueColor,
                 fontSize: 18,
                 fontWeight: FontWeight.bold)));
       } else if (element.startsWith("www.") || element.startsWith("http")) {
         textspans.add(TextSpan(
             text: "$element ",
-            style: TextStyle(
+            style: const TextStyle(
               color: Pallete.blueColor,
               fontSize: 18,
             )));
       } else {
         textspans.add(TextSpan(
             text: "$element ",
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
             )));
       }

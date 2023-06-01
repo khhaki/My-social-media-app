@@ -26,11 +26,11 @@ class SearchTile extends StatelessWidget {
         children: [
           Text(
             '@${userModel.name}',
-            style: TextStyle(fontSize: 16),
+            style: const TextStyle(fontSize: 16),
           ),
           Text(
             userModel.bio,
-            style: TextStyle(fontSize: 16, color: Pallete.whiteColor),
+            style: const TextStyle(fontSize: 16, color: Pallete.whiteColor),
           )
         ],
       ),
